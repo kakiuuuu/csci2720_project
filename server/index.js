@@ -33,11 +33,11 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 /* ROUTES */
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use('/venues', venueRoutes)
-app.use('/events', eventRoutes)
-app.use('/comments', commentRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use('/api/venues', venueRoutes)
+app.use('/api/events', eventRoutes)
+app.use('/api/comments', commentRoutes)
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 3001;

@@ -7,12 +7,6 @@ const salt = await bcrypt.genSalt();
 const passwordHash1 = await bcrypt.hash("admin", salt);
 const passwordHash2 = await bcrypt.hash("donald", salt);
 
-// console.log('passwordHash>>>', passwordHash1)
-const userIds = [
-  new mongoose.Types.ObjectId(),
-  new mongoose.Types.ObjectId(),
-];
-
 const venueIds = [
   "87410030",
   "87616551",
@@ -28,7 +22,6 @@ const venueIds = [
 
 export const users = [
   {
-    _id: userIds[0],
     username: "admin",
     password: passwordHash1,
     isAdmin: true,
@@ -36,7 +29,6 @@ export const users = [
     __v: 0
   },
   {
-    _id: userIds[1],
     username: "donald",
     password: passwordHash2,
     isAdmin: false,
