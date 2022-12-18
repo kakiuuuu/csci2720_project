@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import authReducer from "./state";
+import appReducer from "./state";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
 const store = configureStore({
-  reducer: authReducer
+  reducer: appReducer
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

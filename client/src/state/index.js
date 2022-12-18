@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: null,
-  venues: []
+  venues: [],
+  sort: "",
+  search: "",
 };
 
-export const authSlice = createSlice({
-  name: "auth",
+export const appSlice = createSlice({
+  name: "app",
   initialState,
   reducers: {
     setLogin: (state, action) => {
@@ -35,9 +37,15 @@ export const authSlice = createSlice({
       });
       state.venues = updatedVenues;
     },
+    setSort: (state, action) => {
+      state.sort = action.payload.sort;
+    },
+    setSearch: (state, action) => {
+      state.search = action.payload.search;
+    },
   },
 });
 
-export const { setLogin, setLogout, setVenues, setVenue } =
-  authSlice.actions;
-export default authSlice.reducer;
+export const { setLogin, setLogout, setVenues, setVenue, setSort, setSearch } =
+  appSlice.actions;
+export default appSlice.reducer;

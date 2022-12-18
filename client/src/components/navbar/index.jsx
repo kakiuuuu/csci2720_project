@@ -17,7 +17,7 @@ import {
   FavoriteBorderOutlined,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogout } from "state";
+import { setLogout, setSearch } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
@@ -30,9 +30,21 @@ const Navbar = () => {
   const neutralLight = theme.palette.neutral.light;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
+  const [searchValue, setSearchValue] = useState("")
   const { username, isAdmin } = user
   let location = useLocation();
+
+  
+  const handleClick = () => {
+    // console.log('searchBar.value>>>>', searchValue)
+    dispatch(setSearch({search: searchValue}))
+  };
+
+  const handleSearchChange = ({ target }) => {
+    console.log('target.value>>>>', target.value)
+    setSearchValue(target.value);
+  };
+  
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
@@ -50,43 +62,21 @@ const Navbar = () => {
         >
           <Home sx={{ fontSize: "25px" }} />
         </Typography>
-        { location.pathname === '/home' && (
-          <>
+        {/* { location.pathname === '/home' && (
+          <> */}
             <FlexBetween
               backgroundColor={neutralLight}
               borderRadius="9px"
               gap="3rem"
               padding="0.1rem 1.5rem"
             >
-              <InputBase placeholder="Search..." />
-              <IconButton>
-                <Search />
+              <InputBase placeholder="Search..." name={'searchValue'}  onChange={handleSearchChange}/>
+              <IconButton onClick={(e) => handleClick()}>
+                <Search onClick={(e) => handleClick()}/>
               </IconButton> 
             </FlexBetween>
-            <FlexBetween>
-              <Select
-                value={username}
-                sx={{
-                  backgroundColor: neutralLight,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem",
-                  },
-                  "& .MuiSelect-select:focus": {
-                    backgroundColor: neutralLight,
-                  },
-                }}
-                input={<InputBase />}
-              >
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-            </Select>
-            </FlexBetween>
-          </>
-        )}
+          {/* </>
+        )} */}
         
       </FlexBetween>
 
@@ -114,24 +104,24 @@ const Navbar = () => {
                 backgroundColor: neutralLight,
               },
             }}
-            input={<InputBase />}
+            // input={<InputBase />}
           >
             <MenuItem value={username}>
               <Typography>{username}</Typography>
             </MenuItem>
             { isAdmin && (
-              <>
+              [
                 <MenuItem>
                   <Link to="/event">
                     <Typography>Edit Event</Typography>
                   </Link>
-                </MenuItem>
+                </MenuItem>,
                 <MenuItem>
                   <Link to="/user">
                     <Typography>Edit User</Typography>
                   </Link>
                 </MenuItem>
-              </>
+              ]
             )}
             <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
           </Select>
