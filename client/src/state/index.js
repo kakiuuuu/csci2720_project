@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: null,
+  venues: []
 };
 
 export const authSlice = createSlice({
@@ -24,9 +25,19 @@ export const authSlice = createSlice({
     //     console.error("user friends non-existent :(");
     //   }
     // },
+    setVenues: (state, action) => {
+      state.venues = action.payload.venues;
+    },
+    setVenue: (state, action) => {
+      const updatedVenues = state.venues.map((venue) => {
+        if (venue._id === action.payload.venue._id) return action.payload.venue;
+        return venue;
+      });
+      state.venues = updatedVenues;
+    },
   },
 });
 
-export const { setLogin, setLogout } =
+export const { setLogin, setLogout, setVenues, setVenue } =
   authSlice.actions;
 export default authSlice.reducer;

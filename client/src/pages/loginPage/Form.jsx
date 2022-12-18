@@ -10,7 +10,7 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 
@@ -35,7 +35,7 @@ const Form = () => {
 
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("http://localhost:3001/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -49,7 +49,7 @@ const Form = () => {
           token: loggedIn.token,
         })
       );
-      navigate("/home");
+      navigate("/home", {replace:true});
     }
   };
 

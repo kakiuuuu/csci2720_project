@@ -1,50 +1,48 @@
 import { BrowserRouter, Navigate, Routes, Route, Link, useLocation } from "react-router-dom";
-import LoginPage from "components/loginPage";
-import HomePage from "components/homePage";
-import Favourite from "components/Favourite"
-import Venue from "components/Venue"
-import Map from "components/Map"
+import LoginPage from "pages/loginPage";
+import HomePage from "pages/homePage";
+import Favourite from "pages/Myfavourite"
+import Venue from "pages/Venue"
+import Map from "pages/Map"
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import { createTheme } from "@mui/material/styles";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { themeSettings } from "./theme";
 
 function App() {
   const user = useSelector((state) => state.user);
+  const theme = useMemo(() => createTheme(themeSettings()), []);
   const isAuth = Boolean(useSelector((state) => state.token));
 
   console.log('user>>>', user)
+  console.log('isAuth>>>>', isAuth)
   return (
     <div className="app">
       <BrowserRouter>
-        <div>
-          <ul>
-            {/* <li> <Link to="/">Home</Link> </li> */}
-            <li> <Link to="/venue">Venue</Link> </li>
-            <li> <Link to="/map">Map</Link> </li>
-            <li> <Link to="/favourite">Your favourite</Link> </li>
-          </ul>
-        </div>
-
-        <hr />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-              path="/home"
-              element={isAuth ? <HomePage /> : <Navigate to="login" />}
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/login" element={isAuth ? <Navigate to="/home" replace={true}/>: <LoginPage />} />
+            <Route
+                path="/home"
+                element={isAuth ? <HomePage /> : <Navigate to="/login" />}
             />
-          <Route
-            path="/venue"
-            element={isAuth ? <Venue /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/map"
-            element={isAuth ? <Map /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/favourite"
-            element={isAuth ? <Favourite /> : <Navigate to="/login" />}
-          />
-          <Route path="*" element={isAuth ? <NoMatch /> : <Navigate to="/login" />} />
-
-        </Routes>
+            <Route
+              path="/venue"
+              element={isAuth ? <Venue /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/map"
+              element={isAuth ? <Map /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/favourite"
+              element={isAuth ? <Favourite /> : <Navigate to="/login" />}
+            />
+            <Route path="*" element={isAuth ? <NoMatch /> : <Navigate to="/login" />} />
+          </Routes>
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );

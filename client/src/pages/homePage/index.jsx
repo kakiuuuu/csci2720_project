@@ -1,10 +1,11 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
-import Navbar from "../navbar";
+import VenuesWidget from '../../components/VenuesWidget'
+import Navbar from "../../components/navbar";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { _id, picturePath } = useSelector((state) => state.user);
+  const { username } = useSelector((state) => state.user);
 
   return (
     <Box>
@@ -16,6 +17,12 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
+        <Box
+          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          mt={isNonMobileScreens ? undefined : "2rem"}
+        >
+          <VenuesWidget username={username} />
+        </Box>
       </Box>
     </Box>
   );

@@ -1,9 +1,8 @@
+import Navbar from "../components/navbar";
 
 const Map = () => {
   return (
-    <p>
-      Map
-    </p>
+    <Navbar />
   )
 };
 
