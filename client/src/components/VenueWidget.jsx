@@ -27,7 +27,7 @@ const VenueWidget = ({
   // const isLiked = Boolean(likes[loggedInUserId]);
   // const likeCount = Object.keys(likes).length;
 
-  const { palette } = useTheme();
+  const { typography, palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
@@ -46,28 +46,22 @@ const VenueWidget = ({
 
   return (
     <WidgetWrapper m="2rem 0">
-      {/* <Friend
-        friendId={venueUserId}
-        name={name}
-        subtitle={location}
-        userPicturePath={userPicturePath}
-      /> */}
-      <Typography color={main} sx={{ mt: "1rem" }}>
-        {name}
-      </Typography>
-      <Typography color={main} sx={{ mt: "1rem" }}>
-        Number of event: {events}
-      </Typography>
-      <FlexBetween mt="0.25rem">
-        <FlexBetween gap="1rem">
-
-          {/* <FlexBetween gap="0.3rem">
-            <IconButton onClick={() => setIsComments(!isComments)}>
-              <ChatBubbleOutlineOutlined />
-            </IconButton>
-            <Typography>{comments.length}</Typography>
-          </FlexBetween> */}
-        </FlexBetween>
+      <FlexBetween>
+        <img
+          width="25%"
+          height="auto"
+          alt="venues"
+          style={{ borderRadius: "0.75rem"}}
+          src={"../assets/cuhk.png"}
+        />
+        <Box>
+          <Typography color={main} sx={{ mt: "1rem",  ...typography.h1}}>
+            {name}
+          </Typography>
+          <Typography color={main}>
+            Number of event: {events}
+          </Typography>
+        </Box>
         <IconButton onClick={patchLike}>
           {isLiked ? (
             <FavoriteOutlined sx={{ color: primary }} />
@@ -76,7 +70,7 @@ const VenueWidget = ({
           )}
         </IconButton>
       </FlexBetween>
-      {isComments && (
+      {/* {isComments && (
         <Box mt="0.5rem">
           {comments.map((comment, i) => (
             <Box key={`${name}-${i}`}>
@@ -88,7 +82,7 @@ const VenueWidget = ({
           ))}
           <Divider />
         </Box>
-      )}
+      )} */}
     </WidgetWrapper>
   );
 };

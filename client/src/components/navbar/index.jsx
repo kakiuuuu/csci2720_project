@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   Box,
@@ -32,7 +32,7 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const { username, isAdmin } = user
-
+  let location = useLocation();
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
@@ -50,17 +50,43 @@ const Navbar = () => {
         >
           <Home sx={{ fontSize: "25px" }} />
         </Typography>
-        <FlexBetween
-          backgroundColor={neutralLight}
-          borderRadius="9px"
-          gap="3rem"
-          padding="0.1rem 1.5rem"
-        >
-          <InputBase placeholder="Search..." />
-          <IconButton>
-            <Search />
-          </IconButton>
-        </FlexBetween>
+        { location.pathname === '/home' && (
+          <>
+            <FlexBetween
+              backgroundColor={neutralLight}
+              borderRadius="9px"
+              gap="3rem"
+              padding="0.1rem 1.5rem"
+            >
+              <InputBase placeholder="Search..." />
+              <IconButton>
+                <Search />
+              </IconButton> 
+            </FlexBetween>
+            <FlexBetween>
+              <Select
+                value={username}
+                sx={{
+                  backgroundColor: neutralLight,
+                  width: "150px",
+                  borderRadius: "0.25rem",
+                  p: "0.25rem 1rem",
+                  "& .MuiSvgIcon-root": {
+                    pr: "0.25rem",
+                    width: "3rem",
+                  },
+                  "& .MuiSelect-select:focus": {
+                    backgroundColor: neutralLight,
+                  },
+                }}
+                input={<InputBase />}
+              >
+              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+            </Select>
+            </FlexBetween>
+          </>
+        )}
         
       </FlexBetween>
 
