@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route, Link, useLocation } from "react
 import LoginPage from "pages/loginPage";
 import HomePage from "pages/homePage";
 import Favourite from "pages/Myfavourite"
-import Venue from "pages/Venue"
+import VenueDetail from "pages/VenueDetail"
 import Map from "pages/Map"
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -11,12 +11,12 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { themeSettings } from "./theme";
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const state = useSelector((state) => state);
   const theme = useMemo(() => createTheme(themeSettings()), []);
   const isAuth = Boolean(useSelector((state) => state.token));
 
-  console.log('user>>>', user)
-  console.log('isAuth>>>>', isAuth)
+  // console.log('state>>>', state)
+  console.log('isAuth>>>', isAuth)
   return (
     <div className="app">
       <BrowserRouter>
@@ -29,8 +29,8 @@ function App() {
                 element={isAuth ? <HomePage /> : <Navigate to="/login" />}
             />
             <Route
-              path="/venue"
-              element={isAuth ? <Venue /> : <Navigate to="/login" />}
+              path="/venue/:venueId"
+              element={isAuth ? <VenueDetail /> : <Navigate to="/login" />}
             />
             <Route
               path="/map"
