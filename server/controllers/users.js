@@ -1,5 +1,7 @@
 import User from "../models/User.js";
+import Venue from "../models/Venue.js";
 import bcrypt from "bcrypt";
+import _ from 'lodash'
 
 /* READ */
 export const getAllUser = async (req, res) => {
@@ -13,8 +15,8 @@ export const getAllUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const { username } = req.params;
+    const user = await User.find({username});
     res.status(200).json(user);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -36,6 +38,31 @@ export const patchUser = async (req, res) => {
       }},
     )
 
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export const patchUserLike = async (req, res) => {
+  try {
+    const { username, isLiked, _id } = req.body
+    const [ user ] = await User.find({username});
+    let { favouriteLocation } = user
+
+    if ( isLiked ) 
+       _.remove(favouriteLocation, (LocationId, index) => {
+        return  LocationId.equals(_id)
+      })
+    else 
+      favouriteLocation.push(_id)
+    favouriteLocation = _.compact(favouriteLocation)
+    console.log('favouriteLocation>?>>>>>>', favouriteLocation)
+    const update = await User.updateOne(
+      { username },
+      { favouriteLocation },
+    )
+    let [ updatedUser ] = await User.find({username});
     res.status(200).json(updatedUser);
   } catch (err) {
     res.status(404).json({ message: err.message });

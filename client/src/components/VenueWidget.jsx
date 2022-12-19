@@ -7,11 +7,13 @@ import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 // import Friend from "components/Friend";
 import WidgetWrapper from "./WidgetWrapper";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setVenue } from "state";
+import { setVenue, setUser } from "state";
+import _ from 'lodash'
 
 const VenueWidget = ({
+  _id,
   venueId,
   events,
   latitude,
@@ -22,26 +24,31 @@ const VenueWidget = ({
   // const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
-  const isLiked = true
+  const loggedInUser = useSelector((state) => state.user);
+  const [isLiked, setIslike] = useState(false)
   // const isLiked = Boolean(likes[loggedInUserId]);
-  // const likeCount = Object.keys(likes).length;
 
+  let { username, favouriteLocation } = loggedInUser
   const { typography, palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
+  useEffect(() => {
+    setIslike(false)
+    if(_.includes(favouriteLocation, _id))
+      setIslike(true)
+  }, [favouriteLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:3001/venues/${venueId}/like`, {
+    const response = await fetch(`http://localhost:3001/api/users/like`, {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: loggedInUserId }),
+      body: JSON.stringify({ isLiked, _id, username }),
     });
-    const updatedVenue = await response.json();
-    dispatch(setVenue({ venue: updatedVenue }));
+    const updatedUser = await response.json();
+    dispatch(setUser({ user: updatedUser }));
   };
 
   return (

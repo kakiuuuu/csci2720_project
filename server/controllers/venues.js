@@ -14,8 +14,11 @@ export const getAllVenue = async (req, res) => {
 export const getAllVenueByUser = async (req, res) => {
   try {
     const { username } = req.params;
-    const venue = await Venue.find({ username });
-    res.status(200).json(venue);
+    const [ user ] = await User.find({ username })
+    .populate('favouriteLocation')
+    let { favouriteLocation } = user
+
+    res.status(200).json(favouriteLocation);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

@@ -20,13 +20,9 @@ export const appSlice = createSlice({
       state.user = null;
       state.token = null;
     },
-    // setFriends: (state, action) => {
-    //   if (state.user) {
-    //     state.user.friends = action.payload.friends;
-    //   } else {
-    //     console.error("user friends non-existent :(");
-    //   }
-    // },
+    setUser: (state, action) => {
+      state.user = action.payload.user;
+    },
     setVenues: (state, action) => {
       state.venues = action.payload.venues;
     },
@@ -56,6 +52,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setLogin, setLogout, setVenues, setVenue, setEvents, setEvent, setSort, setSearch } =
+export const { setLogin, setLogout, setVenues, setVenue, setEvents, setEvent, setSort, setSearch, setUser } =
   appSlice.actions;
 export default appSlice.reducer;
