@@ -25,14 +25,12 @@ export const users = [
     username: "admin",
     password: passwordHash1,
     isAdmin: true,
-    favouriteLocation: [],
     __v: 0
   },
   {
     username: "donald",
     password: passwordHash2,
     isAdmin: false,
-    favouriteLocation: [],
     __v: 0
   },
 ];

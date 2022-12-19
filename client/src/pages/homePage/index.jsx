@@ -31,7 +31,7 @@ const HomePage = () => {
     if(typeof value === "string" ) dispatch(setSort({sort: value}))
   };
 
-  console.log('state>>>', state)
+  // console.log('state>>>', state)
   return (
     <Box>
       <Navbar />
@@ -60,22 +60,6 @@ const HomePage = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                // MenuListProps={{
-                //   'aria-labelledby': 'basic-button',
-                // }}
-                // sx={{
-                //   backgroundColor: "#FFFFFF",
-                //   width: "150px",
-                //   borderRadius: "0.25rem",
-                //   p: "0.25rem 1rem",
-                //   "& .MuiSvgIcon-root": {
-                //     pr: "0.25rem",
-                //     width: "3rem",
-                //   },
-                //   // "& .MuiSelect-select:focus": {
-                //   //   backgroundColor: "#FFFFF0",
-                //   // },
-                // }}
               >
               {[<MenuItem onClick={(e) => handleClose("asce")}>Asce</MenuItem>,
               <MenuItem onClick={(e) => handleClose("desc")}>Desc</MenuItem>]}

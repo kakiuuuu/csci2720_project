@@ -3,6 +3,7 @@ import {
   getAllUser,
   getUser,
   patchUser,
+  patchUserLike,
   deleteUser,
 } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
@@ -12,10 +13,10 @@ const router = express.Router();
 /* READ */
 router.get("/", getAllUser);
 router.get("/:username", getUser);
-// router.get("/:id/friends", verifyToken, getUserFriends);
 
 /* UPDATE */
-router.patch("/:username", patchUser);
+router.patch("/username/:username", patchUser);
+router.patch("/like", patchUserLike);
 
 /* DELETE */
 router.delete("/:username", deleteUser);

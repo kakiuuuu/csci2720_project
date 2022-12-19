@@ -15,7 +15,7 @@ const VenuesWidget = ({ username, MyfavouritePage = false }) => {
 
   const getVenues = async (username) => {
     let url = "http://localhost:3001/api/venues"
-    if(username) url += `/${username}`
+    if(username) url += `/user/${username}`
     console.log('url>>>>', url)
     const response = await fetch(url, {
       method: "GET",
@@ -79,6 +79,7 @@ const VenuesWidget = ({ username, MyfavouritePage = false }) => {
         }) => (
           <VenueWidget
             key={_id}
+            _id={_id}
             venueId={venueId}
             events={events}
             latitude={latitude}
