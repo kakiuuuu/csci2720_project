@@ -1,19 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEvents } from "state";
-import PostWidget from "./EventWidget";
+import EventWidget from "./EventWidget";
 
-const EventsWidget = ({ username, MyfavouritePage = false }) => {
+const EventsWidget = ({ venueId }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
   const token = useSelector((state) => state.token);
 
   const getEvents = async () => {
-    const response = await fetch("http://localhost:3001/api/events", {
+    let url = "http://localhost:3001/api/events"
+    if(venueId) url += `/venue/${venueId}`
+
+    const response = await fetch(url, {
       method: "GET",
       // headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("yoyo",response)
     const data = await response.json();
     console.log(data)
     dispatch(setEvents({ events: data }));
@@ -38,7 +40,7 @@ const EventsWidget = ({ username, MyfavouritePage = false }) => {
           title,
           venueId,
         }) => (
-          <PostWidget
+          <EventWidget
             key={_id}
             eventId={eventId}
             date={date}

@@ -21,7 +21,6 @@ const VenuesWidget = ({ username, MyfavouritePage = false }) => {
       method: "GET",
       // headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("yoyo")
     const data = await response.json();
     console.log(data)
     dispatch(setVenues({ venues: data }));

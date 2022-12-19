@@ -15,7 +15,8 @@ import {
 } from "@mui/material";
 import FlexBetween from "../components/FlexBetween";
 import WidgetWrapper from "../components/WidgetWrapper";
-import VenuesWidget from '../components/VenuesWidget'
+import EventsWidget from '../components/EventsWidget'
+import MapWidget from "../components/MapWidget"
 import Navbar from "../components/navbar";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,12 +60,7 @@ const VenueDetail = (props) => {
     name,
     comments,
   } = venueMap[venueId]
-    
-
-  
-  // useEffect(() => {
-  //   getVenues()
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  let locations = [{location: {lat:latitude, lng:longitude }}]
 
   useEffect(() => {
     setIslike(false)
@@ -120,6 +116,11 @@ const VenueDetail = (props) => {
                 )}
               </IconButton>
             </FlexBetween>
+            {/* Event */}
+            <EventsWidget venueId={venueId}/>
+            {/* Map */}
+            <MapWidget locations={locations} />
+            {/* comment */}
             {isComments && (
               <Box mt="0.5rem">
                 {comments.map((comment, i) => (
