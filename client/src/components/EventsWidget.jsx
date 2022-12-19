@@ -22,13 +22,34 @@ const EventsWidget = ({ username, MyfavouritePage = false }) => {
   useEffect(() => {
  
       getEvents();
-      console.log("yyo")
 
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
-    123
+      {events.map(
+        ({
+          _id,
+          eventId,
+          date,
+          description,
+          presenter,
+          price,
+          title,
+          venueId,
+        }) => (
+          <PostWidget
+            key={_id}
+            eventId={eventId}
+            date={date}
+            description={description}
+            presenter={presenter}
+            price={price}
+            title={title}
+            venueId={venueId}
+          />
+        )
+      )}
     </>
   );
 };
