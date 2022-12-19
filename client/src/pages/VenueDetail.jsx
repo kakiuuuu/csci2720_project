@@ -28,14 +28,7 @@ const VenueDetail = (props) => {
 
   const [isComments, setIsComments] = useState(false);
   const [isLiked, setIslike] = useState(false)
-  const [detail, setDetail] = useState({
-    _id: "",
-    events: 0,
-    latitude: 0,
-    longitude: 0,
-    name: "",
-    comments: [],
-  })
+  const [comments, setComments] = useState([])
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const loggedInUser = useSelector((state) => state.user);
@@ -47,21 +40,31 @@ const VenueDetail = (props) => {
 
   let { venueId } = useParams()
   console.log('state>>>', state)
-  
   let venueMap = _.keyBy(state.venues, "venueId")
-  // setDetail(venueMap[venueId])
-
-  console.log('venueMap[venueId]>>>>', venueMap[venueId])
   let {
     _id,
     events,
     latitude,
     longitude,
     name,
-    comments,
   } = venueMap[venueId]
   let locations = [{location: {lat:latitude, lng:longitude }}]
 
+  const getComments = async () => {
+    let url = `http://localhost:3001/api/comments/venue/${venueId}`
+
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    const data = response.json();
+    setComments(data) 
+  };
+  
+  useEffect(() => {
+    getComments()
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log('comments>>>>', comments)
   useEffect(() => {
     setIslike(false)
     if(_.includes(favouriteLocation, _id))
@@ -121,19 +124,19 @@ const VenueDetail = (props) => {
             {/* Map */}
             <MapWidget locations={locations} />
             {/* comment */}
-            {isComments && (
-              <Box mt="0.5rem">
-                {comments.map((comment, i) => (
-                  <Box key={`${name}-${i}`}>
-                    <Divider />
-                    <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                      {comment}
-                    </Typography>
-                  </Box>
-                ))}
-                <Divider />
-              </Box>
-            )}
+
+            { comments.length > 0 && (<Box mt="0.5rem">
+              {comments.map((comment, i) => (
+                <Box key={`${name}-${i}`}>
+                  <Divider />
+                  <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                    {comment}
+                  </Typography>
+                </Box>
+              ))}
+              <Divider />
+            </Box>)}
+
           </WidgetWrapper>
         </Box>
       </Box>

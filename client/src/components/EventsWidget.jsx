@@ -22,9 +22,7 @@ const EventsWidget = ({ venueId }) => {
   };
 
   useEffect(() => {
- 
-      getEvents();
-
+    getEvents();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
