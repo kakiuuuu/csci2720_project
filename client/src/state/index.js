@@ -37,6 +37,16 @@ export const appSlice = createSlice({
       });
       state.venues = updatedVenues;
     },
+    setEvents: (state, action) => {
+      state.events = action.payload.events;
+    },
+    setEvent: (state, action) => {
+      const updatedEvents = state.events.map((event) => {
+        if (event._id === action.payload.event._id) return action.payload.event;
+        return event;
+      });
+      state.events = updatedEvents;
+    },
     setSort: (state, action) => {
       state.sort = action.payload.sort;
     },
@@ -46,6 +56,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setLogin, setLogout, setVenues, setVenue, setSort, setSearch } =
+export const { setLogin, setLogout, setVenues, setVenue, setEvents, setEvent, setSort, setSearch } =
   appSlice.actions;
 export default appSlice.reducer;
