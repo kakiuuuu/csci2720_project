@@ -1,9 +1,10 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
-import Navbar from "../components/navbar";
-import MapWidget from "../components/MapWidget"
-function initMap(){}
-const Map = () => {
+import EventsWidget from '../../components/EventsWidget'
+import VenuesWidget from '../../components/VenuesWidget'
+import Navbar from "../../components/navbar";
+
+const EventPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { username } = useSelector((state) => state.user);
 
@@ -21,13 +22,11 @@ const Map = () => {
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-        <MapWidget />
+          <EventsWidget username={username} />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default Map;
-
-
+export default EventPage;

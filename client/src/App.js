@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Routes, Route, Link, useLocation } from "react-router-dom";
 import LoginPage from "pages/loginPage";
 import HomePage from "pages/homePage";
+import EventPage from "pages/eventPage";
 import Favourite from "pages/Myfavourite"
 import VenueDetail from "pages/VenueDetail"
 import Map from "pages/Map"
@@ -31,6 +32,10 @@ function App() {
             <Route
               path="/venue/:venueId"
               element={isAuth ? <VenueDetail /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/event"
+              element={isAuth ? <EventPage /> : <Navigate to="/login" />}
             />
             <Route
               path="/map"

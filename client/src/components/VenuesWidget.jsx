@@ -21,7 +21,9 @@ const VenuesWidget = ({ username, MyfavouritePage = false }) => {
       method: "GET",
       // headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("yoyo")
     const data = await response.json();
+    console.log(data)
     dispatch(setVenues({ venues: data }));
   };
 
@@ -46,6 +48,7 @@ const VenuesWidget = ({ username, MyfavouritePage = false }) => {
     searchedData = fuse.search(search)
     searchedData = _.map(searchedData, 'item')
     console.log('searchedData>>>>', searchedData)
+
     dispatch(setVenues({ venues: searchedData }));
   };
 
